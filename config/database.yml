@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  username: postgres
+  password: password
+  host: localhost
+
+development:
+  <<: *default
+  database: noteApiSteps_development
+
+test:
+  <<: *default
+  database: noteApiSteps_test
+
+production:
+  <<: *default
+  database: noteApiSteps_production
+  # username: noteApiSteps
+  # password: <%= ENV['NOTEAPISTEPS_DATABASE_PASSWORD'] %>
