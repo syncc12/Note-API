@@ -8,7 +8,7 @@ RSpec.describe NotesController, type: :controller do
     end
 
     it "should return Notes in response" do
-      Note.create(content: 'This is a note.')
+      Note.create(title: 'this title.', content: 'This is a note.')
       get :index
       json = JSON.parse(response.body)
       expect(json.length).to be >= 1
@@ -17,7 +17,7 @@ RSpec.describe NotesController, type: :controller do
 
   describe "notes#create action" do
     before do
-      post :create, params: { note: { content: 'Hello' } }
+      post :create, params: { note: { title: 'this title.', content: 'Hello' } }
     end
 
     it "should return 200 status-code" do
@@ -35,12 +35,12 @@ RSpec.describe NotesController, type: :controller do
     end
 
     it "should properly deal with validation errors" do
-      post :create, params: { note: { content: '' } }
+      post :create, params: { note: { title: '', content: '' } }
       expect(response).to have_http_status(:unprocessable_entity)
     end
 
     it "should return error json on validation error" do
-      post :create, params: { note: { content: '' } }
+      post :create, params: { note: { title: '', content: '' } }
       json = JSON.parse(response.body)
       expect(json).to include("errors")
     end
@@ -48,7 +48,7 @@ RSpec.describe NotesController, type: :controller do
 
   describe "notes#show action" do
     before do
-      @note = Note.create(content: 'Show this note.')
+      @note = Note.create(title: 'this title.', content: 'Show this note.')
       @tag = Tag.create(name: 'Show this tag.', note_id: @note.id)
       get :show, params: { id: @note.id }
       @json = JSON.parse(response.body)
@@ -65,24 +65,24 @@ RSpec.describe NotesController, type: :controller do
 
   describe "notes#update action" do
     before do
-      @note = Note.create(content: 'Show this note.')
+      @note = Note.create(title: 'this title.', content: 'Show this note.')
     end
 
     it "should recieve the updated note in response" do
-      put :update, params: { id: @note.id, note: { content: 'Updated this note.'} }
+      put :update, params: { id: @note.id, note: { title: 'this title.', content: 'Updated this note.'} }
       json = JSON.parse(response.body)
       expect(json['content']).to eq('Updated this note.')
     end
 
     it "should properly deal with validation errors" do
-      put :update, params: { id: @note.id, note: { content: '' } }
+      put :update, params: { id: @note.id, note: { title: '', content: '' } }
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
 
   describe "notes#destroy action" do
     it "should destroy saved note" do
-      note = Note.create(content: 'This will be deleted.')
+      note = Note.create(title: 'this title.', content: 'This will be deleted.')
       delete :destroy, params: { id: note.id }
       expect(response).to be_success
       note = Note.find_by_id(note.id)
@@ -90,7 +90,7 @@ RSpec.describe NotesController, type: :controller do
     end
 
     it "should return :no_content" do
-      note = Note.create(content: 'This will be deleted.')
+      note = Note.create(title: 'this title.', content: 'This will be deleted.')
       delete :destroy, params: { id: note.id }
       expect(response).to have_http_status(:no_content)
     end
