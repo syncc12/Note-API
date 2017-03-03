@@ -4,7 +4,7 @@ RSpec.describe NotesController, type: :controller do
   describe "notes#index action" do
     it "should successfully respond" do
       get :index
-      expect(response).to have_http_status(:success)
+      expect(response).to have_http_status(:ok)
     end
 
     it "should return Notes in response" do
@@ -59,8 +59,7 @@ RSpec.describe NotesController, type: :controller do
     end
 
     it "should include associated tags in response" do
-      expect(@json['tags']).to eq([{"name" => @tag.name}])
-      # expect(@json['tags'][0]['name']).to eq(@tag.name)
+      expect(@json['tags'][0]['name']).to eq(@tag.name)
     end
   end
 

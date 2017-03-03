@@ -21,7 +21,7 @@ class NotesController < ApplicationController
   def update
     note = Note.find(params[:id])
     if note.update_attributes(note_params)
-      render json: note, status: :success
+      render json: note, status: :ok
     else
       render json: render_errors(note), status: :unprocessable_entity
     end
