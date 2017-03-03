@@ -1,6 +1,6 @@
 class NotesController < ApplicationController
   def index
-    notes = Note.order(id: :desc)
+    notes = Note.order(id: :asc)
     render json: notes
   end
 
