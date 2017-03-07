@@ -7,11 +7,21 @@ RSpec.describe NotesController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
-    it "should return Notes in response" do
-      Note.create(title: 'this title.', content: 'This is a note.')
+    it "should return Notes in ascending order" do
+      2.times do
+        Note.create(title: 'this title.', content: 'This is a note.')
+      end
       get :index
       json = JSON.parse(response.body)
-      expect(json.length).to be >= 1
+      expect(json[0]['id'] < json[1]['id']).to be true
+    end
+
+    it "should include associated tags in response" do
+      note = Note.create(title: 'this title.', content: 'This is a note.')
+      tag = Tag.create(name: 'This is a tag', note_id: note.id)
+      get :index
+      json = JSON.parse(response.body)
+      expect(json[0]['tags'][0]['name']).to eq(tag.name)
     end
   end
 
