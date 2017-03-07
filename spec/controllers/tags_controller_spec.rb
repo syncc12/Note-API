@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe TagsController, type: :controller do
   describe "tags#create action" do
     before do
-      @note = Note.create(content: 'This is a note.')
+      @note = Note.create(title: 'First', content: 'This is a note.')
       post :create, params: { tag: { name: 'Crazy' }, note_id: @note.id }
     end
 
@@ -18,7 +18,7 @@ RSpec.describe TagsController, type: :controller do
 
   describe "tags#create action validations" do
     before do
-      @note = Note.create(content: 'This is a note.')
+      @note = Note.create(title: 'First', content: 'This is a note.')
       post :create, params: { tag: { name: '' }, note_id: @note.id }
     end
 
@@ -34,7 +34,7 @@ RSpec.describe TagsController, type: :controller do
 
   describe "tags#destroy action" do
     before do
-      note = Note.create(content: 'This is a note.')
+      note = Note.create(title: 'First', content: 'This is a note.')
       @tag = Tag.create(name: 'This is a tag', note_id: note.id)
       delete :destroy, params: { note_id: note.id, id: @tag.id }
     end
