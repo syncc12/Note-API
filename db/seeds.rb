@@ -5,3 +5,6 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Note.create(title: 'Welcome!', content: 'This note was auto-generated for you.')
+Note.create(title: 'React', content: 'In these lessons, you will learn all about React. Enjoy! :)')
